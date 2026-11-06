@@ -1,0 +1,40 @@
+services:
+  db-library:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      DBLIB_CONFIG: /etc/db-library/databases.json
+    volumes:
+      - ${DBLIB_DATABASES_FILE:-./config/databases.json}:/etc/db-library/databases.json:ro
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PORT:-5173}:5173"
+    environment:
+      API_PROXY_TARGET: http://db-library:8080
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./web:/src/web
+      - web_node_modules:/src/web/node_modules
+    depends_on:
+      - db-library
+    restart: unless-stopped
+
+volumes:
+  web_node_modules:

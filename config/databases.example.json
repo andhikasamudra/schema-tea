@@ -1,0 +1,49 @@
+{
+  "connections": [
+    {
+      "id": "risk-postgres-cluster",
+      "name": "Risk PostgreSQL Cluster",
+      "engine": "postgres",
+      "host": "localhost",
+      "port": 5432,
+      "username_env": "DBLIB_RISK_USERNAME",
+      "password_env": "DBLIB_RISK_PASSWORD",
+      "sslmode": "disable",
+      "databases": [
+        {
+          "id": "risk-development",
+          "name": "Risk Development",
+          "environment": "development",
+          "database": "risk_dev",
+          "schemas": ["risk"]
+        },
+        {
+          "id": "risk-production",
+          "name": "Risk Production",
+          "environment": "production",
+          "database": "risk_prod",
+          "schemas": ["risk"]
+        }
+      ]
+    },
+    {
+      "id": "analytics-mysql-cluster",
+      "name": "Analytics MySQL Cluster",
+      "engine": "mysql",
+      "host": "localhost",
+      "port": 3306,
+      "username_env": "DBLIB_ANALYTICS_USERNAME",
+      "password_env": "DBLIB_ANALYTICS_PASSWORD",
+      "sslmode": "disable",
+      "databases": [
+        {
+          "id": "analytics-development",
+          "name": "Analytics Development",
+          "environment": "development",
+          "database": "analytics_dev",
+          "schemas": ["analytics_dev"]
+        }
+      ]
+    }
+  ]
+}

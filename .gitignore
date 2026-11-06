@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+/bin/
+/tmp/
+/dist/
+/node_modules/
+web/node_modules/
+coverage.out
+.env
+config/databases.json
+
+
+env.sh
